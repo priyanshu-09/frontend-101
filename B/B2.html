@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        .wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+
+        }
+        .box{
+            width: 400px;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            
+        }
+        .table{
+            width: 336px;
+            display: flex;
+            flex-direction: column;
+            border: 10px solid grey;
+            height:auto ;
+            overflow:scroll;    
+            
+
+
+        }
+    </style>
+</head>
+<body >
+    <div class="wrapper">
+        <div class="box">
+            <div class="table">
+                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(1)}" > Random <br>
+                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(2)}"> Random<br>
+                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(3)}"> Random<br>
+                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(4)}"> Random<br>
+                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(5)}"> Random<br>
+                
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        let order=0
+        function myFunction(input){
+            order=input-1
+            //console.log("hi")
+            //console.log(order)
+            check_shift(event)
+        }
+        function check_shift(event){
+            if(event.shiftKey){
+                
+                var start=0
+                var elem=document.getElementsByClassName("check")
+                var len=elem.length
+                for(var i=0;i<len;i++){
+                    if(elem[i].checked){
+                        start=i
+                        break
+                    }
+                }
+                if(order>start){
+                    for(var i=start;i<=order;i++){
+                        elem[i].checked=true
+                    }
+                    
+                }
+                //console.log("bye")
+                //console.log(order)
+                //console.log(start)
+            }
+        }
+    </script>
+</body>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        .red{
+            border: red 1px solid;
+            
+        }
+    </style>
+</head>
+<body>
+    Name: <input id="name" type="text" onfocus="isEmpty(id)"  onchange="isEmpty(id)"><br>
+    Email: <input id="Email" type="email" onfocus="isEmpty(id)" onchange="isEmpty(id)"><br>
+    Password: <input id="pass" type="password" onfocus="isEmpty(id)" onchange="isEmpty(id);pass()"><br>
+    phone: <input id="phone" type="number" onfocus="isEmpty(id)" onchange="isEmpty(id)"><br>
+    Events of Participation:
+    <select id="drop" onchange="isEmpty_drop(value)" onfocus="isEmpty_drop(value)">
+        <option>
+
+        </option>
+        <option>
+            HI
+        </option>
+        <option>
+            BYE
+        </option>
+    </select>
+    <br>
+    Year of Study: <input type="number" id="year"><br>
+    Gender: 
+    <select id="gender">
+        <option>
+
+        </option>
+        <option>
+            Male
+        </option>
+        <option>
+            Female
+        </option>
+    </select>
+    <script>
+        function isEmpty(input){
+            var elem=document.getElementById(input).value;
+            var element=document.getElementById(input)
+            
+            if(elem==''){
+                
+                element.setAttribute("class","red")
+                console.log("hi")
+            }
+            else{
+                element.setAttribute("class","normal")
+                console.log("bye")
+            }
+        }
+
+        function isEmpty_drop(elem){
+            var element=document.getElementById("drop")
+            if(elem==''){
+                
+                element.setAttribute("class","red")
+                console.log("hi")
+            }
+            else{
+                element.setAttribute("class","normal")
+                console.log("bye")
+            }
+        }
+        function pass(){
+            var name=document.getElementById("name").value;
+            var pass=document.getElementById("pass").value;
+            var name_i=/name/i
+            var is_same=pass.match(name_i)
+            
+            if(is_same!=null){
+                alert("Password shouldn't contain name")
+                document.getElementById("pass").value=''
+            }
+            if(pass.length<8||pass.length>15){
+                alert("Password length should be between 8 and 15")
+            }
+            var number=/[0-9]+/
+            var special=/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+            var alphanum_special=/[^!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?a-zA-Z0-9]/
+            if(number.test(pass)==false||special.test(pass)==false){
+                alert("should contain atleast one special chararcter and a number")
+            }
+            if(alphanum_special.test(pass)==false){
+                alert("only alphanumerics and special symbols from the US keyboard allowed")
+            }
+        }
+    </script>
+</body>

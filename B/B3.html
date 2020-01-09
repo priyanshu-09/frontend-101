@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        .wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+
+        }
+        .box{
+            width: 400px;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 5px solid grey;
+        }
+        .table{
+            width: 336px;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid grey;
+            height:60vh ;
+            overflow:scroll;    
+            
+
+
+        }
+        .input_box{
+            width: 390px;
+            display: flex;
+            height: 5vh;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .heading{
+            width: 390px;
+            text-align: center;
+            font-size: 4vh;
+            height: 6vh;
+        }
+        .table_contents{
+            width: 332px;
+            height: 6vh;
+            font-size: 3vh;
+            display: flex;
+            border: 0.2px solid grey;
+            justify-content: space-around;
+        }
+        .center{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body onload="load()">
+    <div class="wrapper">
+        <div class="box">
+            <div class="heading">
+                FRONTEND TECH
+            </div>
+            <div class="table">
+
+            </div>
+            <div class="input_box">
+                <input type="text" id="add">
+                <button onclick="add()">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var table=document.getElementsByClassName('table')[0]
+        
+        
+        
+        var count=0
+        function add(){
+            var name =document.getElementById('add').value;
+            var div=document.createElement('div')
+            
+            div.innerHTML='<div class="center">'+name+'</div>'+'<a class="center" onclick="remove('+name+')">X</a>';
+            div.setAttribute("id",name)
+            div.setAttribute("class","table_contents")
+            table.appendChild(div)
+            document.getElementById('add').value=''
+            //localStorage.setItem(div,name)
+            arr()
+              
+        }
+        function remove(iput){
+            //var div=document.getElementById()
+            
+            
+            table.removeChild(iput)
+            var rem=getName(iput)
+            arr()
+            
+
+            //localStorage.removeItem(rem)
+        }
+        var Arr=['']
+        
+        function arr(){
+            var Arr=['']
+            
+            sessionStorage.setItem("HI","count")
+            
+            sessionStorage.removeItem("array")
+            var contents=document.getElementsByClassName('table_contents')
+            var len=contents.length
+            for (var i=0;i<len;i++){
+                var elem=contents[i]
+                
+                var rem=getName(elem)
+                Arr.push(rem)
+            }
+            console.log(JSON.stringify(Arr))
+            sessionStorage.setItem("array",JSON.stringify(Arr))
+        }
+
+
+        function getName(iput){
+            var rem=''
+            var html=iput.innerHTML
+            var len=iput.innerHTML.length
+
+            for(var i=0;i<len;i++){
+                if(html[i]=='<'){
+                    break
+                }
+                rem+=html[i]
+            }
+            return rem
+        }
+        function load(){
+            var co=sessionStorage.getItem("HI")
+            
+
+            if(co=="count"){
+                
+                console.log("Hi")
+                var loaded=sessionStorage.getItem("array")
+                
+                var loaded_arr=JSON.parse(loaded)
+                console.log(loaded_arr)
+                var len=loaded_arr.length
+                for(var i=1;i<len;i++){
+                    var div=document.createElement('div')
+                
+                    div.innerHTML='<div class="center">'+loaded_arr[i]+'</div>'+'<a class="center" onclick="remove('+loaded_arr[i]+')">X</a>';
+                    div.setAttribute("id",loaded_arr[i])
+                    div.setAttribute("class","table_contents")
+                    table.appendChild(div)
+
+                }
+            }
+                
+        }
+        
+            //var session=localStorage.getItem()
+            // console.log(len)
+            // for(var i=0;i<len;i++){
+            //     var elem=contents[i]
+            //     console.log(elem)
+            // }
+    </script>
+</body>
