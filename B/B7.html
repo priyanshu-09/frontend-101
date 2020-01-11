@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<hEAD>
+    <style>
+        .wrapper{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+        }
+        .box{
+            height: 200px;
+            width: 200px;
+            border: 5px solid turquoise;
+            border-radius: 2%;
+            
+            color: navy;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+        }
+        .box div{
+            flex-grow: 1;
+            display: flex;
+        }
+        .box>div>div{
+            
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</hEAD>
+<body>
+    <div class="wrapper">
+        <div class="box">
+            <div>
+                <div id="11">.</div>
+                <div id="12">.</div>
+                <div id="13">.</div>
+                <div id="14">.</div>
+            </div>
+            <div>
+                <div id="21">.</div>
+                <div id="22">.</div>
+                <div id="23">.</div>
+                <div id="24">.</div>
+            </div>
+            <div>
+                <div id="31">.</div>
+                <div id="32">.</div>
+                <div id="33">.</div>
+                <div id="34">.</div>
+            </div>
+            <div>
+                <div id="41">.</div>
+                <div id="42">.</div>
+                <div id="43">.</div>
+                <div id="44">.</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        random()
+
+        function random(){
+            var Arr_empty=[]
+            for(var i=1;i<5;i++){
+                for(var j=1;j<5;j++){
+                    var no=i*10+j
+                    var str=no.toString()
+                    var valu=document.getElementById(str).innerHTML
+                    //console.log(valu=='.')
+                    if(valu=='.'){
+                        Arr_empty.push(no)
+
+                    }
+                    else if(valu=='2048'){
+                        alert("You Won")
+
+                    }
+                    else{
+                        continue
+                    }
+
+                }
+            }
+            var len=Arr_empty.length
+            if(len!=0){
+                var random=Math.floor(Math.random()*len)
+                var elem=Arr_empty[random]
+                //console.log(len)
+                //console.log(random)
+                document.getElementById(elem.toString()).innerHTML='2'
+            }
+            //console.log(Arr_empty)
+        }
+        document.onkeydown = function(event) {
+            switch (event.keyCode) {
+            case 37:
+                    left();
+                break;
+            case 38:
+                    up();
+                break;
+            case 39:
+                   right() ;
+                break;
+            case 40:
+                    down();
+                break;
+            }
+        };
+        function clock(){
+            // for(var i=1;i<5;i++){
+            //     for(var j=i+1;j<5;j++){
+            //         var prev=j*10+i
+            //         var ne=i*10+j
+            //         var str_p=prev.toString()
+            //         var str_n=ne.toString()
+            //         var temp=document.getElementById(str_p).innerHTML
+            //         document.getElementById(str_p).innerHTML=document.getElementById(str_n).innerHTML
+            //         document.getElementById(str_n).innerHTML=temp
+            //     }
+            // }
+            var Arr_box=[]
+            
+            for(var i=1;i<5;i++){
+                var row=[]
+                for(var j=1;j<5;j++){
+                   var no=i*10+j
+                   row.push(document.getElementById(no.toString()).innerHTML) 
+                }
+                Arr_box.push(row)
+            }
+            for(var i=0;i<4;i++){
+                for(var j=0;j<4;j++){
+                    var temp=Arr_box[3-j][i]
+                    var no=(i+1)*10+(j+1)
+                    document.getElementById(no.toString()).innerHTML=temp
+                }
+            }
+        }
+        function left(){
+            for(var i=1;i<5;i++){
+                var row=[]
+                for(var j=1;j<5;j++){
+                    var no=i*10+j
+                    var val=document.getElementById(no.toString()).innerHTML
+                    if(val!='.'){
+                        var num=parseInt(val)
+                        var len=row.length
+                        if(len!=0){
+                            if(row[len-1]==num){
+                                var ne=row[len-1]+num
+                                row.pop()
+                                row.push(ne)
+                            }
+                            else{
+                                row.push(num)
+                            }
+                        }
+                        else{
+                            row.push(num)
+                        }
+                        
+                    }
+                }
+                var len_row=row.length
+                if(len_row!=0){
+                    for(var j=0;j<len_row;j++){
+                        var no=i*10+(j+1)
+                        document.getElementById(no.toString()).innerHTML=row[j].toString()
+                    }
+                    for(var j=len_row+1;j<5;j++){
+                        var no=i*10+j
+                        document.getElementById(no.toString()).innerHTML='.'
+                    }
+                }
+                else{
+                    for(var j=1;j<5;j++){
+                        var no=i*10+j
+                        document.getElementById(no.toString()).innerHTML='.'
+                    }
+                }
+                
+            }
+            random()
+        }
+        function up(){
+            clock()
+            clock()
+            clock()
+            left()
+            clock()
+        }
+        function down(){
+            clock()
+            left()
+            clock()
+            clock()
+            clock()
+        }
+        function right(){
+            clock()
+            clock()
+            left()
+            clock()
+            clock()
+        }
+    </script>
+</body>
