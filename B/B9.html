@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        .page,.page>div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        body{
+            color: navy;
+            font-size: 100px;
+            background-color: turquoise;
+        }
+        .elem{
+            border: rgb(13, 189, 136) 10px solid;
+            border-radius: 5%;
+            background-color: teal;
+            margin: 20px;
+            padding: 40px;
+        }
+        .page{
+            width: 100%;
+            height: 100%;
+            margin-top: 200px;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+        .active, .dot:hover {
+            background-color: #717171;
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .dot_cont{
+            text-align: center;
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper"></div>
+    <script>
+        var total_elem=prompt("No of elements you want")
+        var card=prompt("no of elements in a page  \n Please Provide a number between 1 and the number of elements")
+        var total
+        if(Number.isInteger(total_elem/card)){
+            total=total_elem/card
+        }
+        else{
+            total=parseInt(total_elem/card)+1
+        }
+        var wrapper=document.getElementById("wrapper")
+        for(var i=1;i<=total;i++){
+            var div=document.createElement('div')
+            div.setAttribute("class",'page')
+            wrapper.appendChild(div)
+            
+        }
+        var a=document.createElement('a')
+        a.setAttribute("class","prev")
+        a.setAttribute("onclick","plusSlides(-1)")
+        a.innerHTML='&#10094;'
+        wrapper.appendChild(a)
+        var b=document.createElement('a')
+        b.setAttribute("class","next")
+        b.setAttribute("onclick","plusSlides(1)")
+        b.innerHTML='&#10095;'
+        wrapper.appendChild(b)
+        console.log(total)
+
+
+        var div_dot =document.createElement('div')
+        div_dot.setAttribute("class","dot_cont")
+        wrapper.appendChild(div_dot)
+        var cont=document.getElementsByClassName("dot_cont")[0]
+        for(var j=1;j<=total;j++){
+            var span=document.createElement("span")
+            span.setAttribute("class","dot")
+            cont.appendChild(span)
+            
+        }
+        
+        var pages=document.getElementsByClassName('page')
+        var len=pages.length
+        for(var i=0;i<len-1;i++){
+            for(var j=1;j<=card;j++){
+                var elem=document.createElement('div')
+                elem.setAttribute('class','elem')
+                var number=card*i+j
+                elem.innerHTML=number.toString()
+                pages[i].appendChild(elem)
+            }
+        }
+        var remaining=total_elem-((len-1)*card)
+        for(var j=1;j<=remaining;j++){
+            var elem=document.createElement('div')
+            elem.setAttribute('class','elem')
+            var number=(len-1)*card+j
+            elem.innerHTML=number.toString()
+            pages[len-1].appendChild(elem)
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        var my=setInterval(plus,2000)
+        function myfu(){
+            console.log("hi")
+        }
+        function plus(){
+            showSlides(slideIndex+=1)
+        }
+        function plusSlides(n) {
+        showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+        showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("page");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "flex";  
+        dots[slideIndex-1].className += " active";
+        }
+    </script>
+</body>
