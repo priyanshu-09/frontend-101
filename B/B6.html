@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<head>
+    <style>
+       .wrapper{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+
+       } 
+       body{
+        background-color: rgb(197, 238, 224);
+        font-weight: bold;
+       }
+       .box{
+           display: flex;
+           justify-content: center;
+           flex-direction: column;
+           align-items: center;
+           background-color: rgb(197, 238, 224);
+           margin-top: 150px;
+           min-height: 300px;
+           min-width: 400px;
+           border: navy 5px solid;
+           border-radius: 2%;
+           color: darkblue;
+       }
+       .info{
+           display: flex;
+           justify-content: space-around;
+       }
+       .
+       .name_desc{
+           display: flex;
+           flex-direction: column;
+           justify-content: center;
+           align-items: center;
+       }
+       .name_desc>div{
+           margin: 10px;
+       }
+       #input{
+           background-color: darkcyan;
+           color: white;
+       }
+       .box>div{
+           margin: 10px;
+       }
+       .info>div{
+           flex-grow: 1;
+           margin: 10px;
+       }
+       .desc{
+           word-wrap: normal;
+       }
+       
+    </style>
+</head>
+<body >
+    <div class="wrapper">
+        <div class="box">
+            <div>
+                Enter a GitHub username:   <input type="text" id="input">
+            </div>
+            <div>
+                Choose Your Method:  
+                <select id="method" onchange="method()" >
+                    <option></option>
+                    <option>XMLHttpRequest</option>
+                    <option>Ajax</option>
+                    <option>Fetch API</option>
+                </select>
+                
+            </div>
+            <div class="info">
+                <div class="name_desc">
+                    <div id="name">
+
+                    </div>
+                    <div id="desc">
+
+                    </div>
+                </div>
+                <div id="photo" style="height: 100px; width: 100px; border-radius: 50%; border-color: darkblue;">
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script>
+        document.body.addEventListener( 'keyup', function (e) {
+            if ( e.keyCode == 13 ) {
+               method()
+            }
+        })
+        function method(){
+            var method=document.getElementById("method")
+            var result=method.options[method.selectedIndex].text
+            if(result==''){
+                alert("Please choose a method")
+            }
+            else{
+                call(result)
+            }
+        }
+        function call(input){
+            var now=performance.now()
+            var url=document.getElementById("input").value
+            var name=document.getElementById("name")
+            var desc=document.getElementById('desc')
+            var img=document.getElementById("photo")
+            if(input=="XMLHttpRequest"){
+                var xhr=new XMLHttpRequest()
+                xhr.open('GET','https://api.github.com/users/'+url)
+                xhr.send()
+                //xhr.onerror=alert("There is some error")
+                xhr.onload=function(){
+                    var result=JSON.parse(xhr.response)
+                    if(result.message){alert("User Not Found")}
+                    if(result.name){name.innerHTML=result.name}
+                    else{name.innerHTML="Not Mentioned"}
+
+                    if(result.bio){desc.innerHTML=result.bio}
+                    else{
+                        desc.innerHTML="Not Mentioned"
+                    }
+
+                    img.style.background="url("+result.avatar_url+")"
+                }
+                var end=performance.now()
+                alert('This Request took '+(end-now)+' millisec')
+                
+            }
+            else if(input=="Ajax"){
+                var now=performance.now()
+                $.ajax({
+
+                    url : 'https://api.github.com/users/'+url,
+                    type : 'GET',
+                    
+                    dataType:'json',
+                    success : function(data) {              
+                            if(data.message){alert("User Not Found")}
+                            if(data.name){name.innerHTML=data.name}
+                            else{name.innerHTML="Not Mentioned"}
+
+                            if(data.bio){desc.innerHTML=data.bio}
+                            else{
+                                desc.innerHTML="Not Mentioned"
+                            }
+                            
+                            img.style.background="url("+data.avatar_url+")"
+                        }
+                    });
+                    var end=performance.now()
+                    alert('This Request took '+(end-now)+' millisec')
+            }
+            else{
+                
+                (async()=>{
+                    var now=performance.now()
+                    var url_f='https://api.github.com/users/'+url
+                    var response=await fetch(url_f)
+                    var data=await response.json()
+                    console.log(data)
+                    if(data.message){alert("User Not Found")}
+                    if(data.name){name.innerHTML=data.name}
+                    else{name.innerHTML="Not Mentioned"}
+
+                    if(data.bio){desc.innerHTML=data.bio}
+                    else{
+                        desc.innerHTML="Not Mentioned"
+                     }
+                    
+                    img.style.background="url("+data.avatar_url+")"
+                    var end=performance.now()
+                    alert('This Request took '+(end-now)+' millisec')
+                })()
+                
+            }
+
+        }
+    </script>
+    
+</body>
