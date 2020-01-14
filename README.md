@@ -1,11 +1,6 @@
 # DVM, BITS Pilani
 ## Frontend-101
-## SET-A 
-### HTML and CSS
 
-
-#### [Task A1 – Trippy Grid](# DVM, BITS Pilani
-## Frontend-101
 ## SET-A 
 ### HTML and CSS
 
@@ -34,5 +29,5 @@ using Fetch API , XMLHttpRequest and jQuery/AJAX to print a GitHub user's public
 A basic 2048 game using Vanilla Js
 #### [Task B8 - Form Validator](https://priyanshu-09.github.io/frontend-101/B/B8.html)
 Making a simple form that contains somple text-fields like Name*, Email*, Phone*, Password* with constraints on password
-#### [Task B9 - Custom Carousel](https://chirag-wadhwa.github.io/frontend-101/B/B9.html)
+#### [Task B9 - Custom Carousel](https://priyanshu-09.github.io/frontend-101/B/B9.html)
 creating a custom carousel which takes total number of elements and number of elements to be shown at a time as input from the user and shows the required carousel.
