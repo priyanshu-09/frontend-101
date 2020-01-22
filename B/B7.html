@@ -7,12 +7,14 @@
             align-items:center;
         }
         .box{
-            height: 200px;
-            width: 200px;
-            border: 5px solid turquoise;
+            height: 450px;
+            width: 450px;
+            font-size: 40px;
             border-radius: 2%;
-            
-            color: navy;
+            padding: 5px;
+            background-color:#e3ac78;
+
+            color:brown;
             font-weight: bold;
             display: flex;
             flex-direction: column;
@@ -22,11 +24,37 @@
             display: flex;
         }
         .box>div>div{
-            
-            margin: 10px;
+            height: 100px;
+            width: 100px;
+            margin: 5px;
+            background-color: ivory;
+            border-radius: 2%;
             display: flex;
             justify-content: center;
             align-items: center;
+
+        }
+        .number{
+            height: 100px;
+            width: 100px;
+            background: transparent;
+            font-size: 40px;
+            background-color: ivory;
+            border-radius: 2%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes big {
+            0%{
+                transform: scale(1);
+            }
+            50%{
+                transform: scale(1.2);
+            }
+            100%{
+                transform: scale(1);
+            }
         }
     </style>
 </hEAD>
@@ -34,32 +62,66 @@
     <div class="wrapper">
         <div class="box">
             <div>
-                <div id="11">.</div>
-                <div id="12">.</div>
-                <div id="13">.</div>
-                <div id="14">.</div>
+                <div id="11">
+                    <div class="number"></div>
+                </div>
+                <div id="12">
+                    <div class="number"></div>
+                </div>
+                <div id="13">
+                    <div class="number"></div>
+                </div>
+                <div id="14">
+                    <div class="number"></div>
+                </div>
             </div>
             <div>
-                <div id="21">.</div>
-                <div id="22">.</div>
-                <div id="23">.</div>
-                <div id="24">.</div>
+                <div id="21">
+                    <div class="number"></div>
+                </div>
+                <div id="22">
+                    <div class="number"></div>
+                </div>
+                <div id="23">
+                    <div class="number"></div>
+                </div>
+                <div id="24">
+                    <div class="number"></div>
+                </div>
             </div>
             <div>
-                <div id="31">.</div>
-                <div id="32">.</div>
-                <div id="33">.</div>
-                <div id="34">.</div>
+                <div id="31">
+                    <div class="number"></div>
+                </div>
+                <div id="32">
+                    <div class="number"></div>
+                </div>
+                <div id="33">
+                    <div class="number"></div>
+                </div>
+                <div id="34">
+                    <div class="number"></div>
+                </div>
             </div>
             <div>
-                <div id="41">.</div>
-                <div id="42">.</div>
-                <div id="43">.</div>
-                <div id="44">.</div>
+                <div id="41">
+                    <div class="number"></div>
+                </div>
+                <div id="42">
+                    <div class="number"></div>
+                </div>
+                <div id="43">
+                    <div class="number"></div>
+                </div>
+                <div id="44">
+                    <div class="number"></div>
+                </div>
             </div>
         </div>
     </div>
     <script>
+        const colors = ['2','4','8','16','32','64','128','256','512','1024','2048']
+        const colors_arr=["#eee3d6","#fab387","#f2b179","#f59563","#f67e5f","#f65e3b","#f1d96b","#f2cf4d","#e5c12b","#dfba12","#edc501"]
         random()
 
         function random(){
@@ -68,9 +130,10 @@
                 for(var j=1;j<5;j++){
                     var no=i*10+j
                     var str=no.toString()
-                    var valu=document.getElementById(str).innerHTML
+                    var valu=document.getElementById(str).querySelector('.number').innerHTML
                     //console.log(valu=='.')
-                    if(valu=='.'){
+                    
+                    if(valu==''){
                         Arr_empty.push(no)
 
                     }
@@ -78,8 +141,10 @@
                         alert("You Won")
 
                     }
+                    
                     else{
                         continue
+                        
                     }
 
                 }
@@ -88,28 +153,64 @@
             if(len!=0){
                 var random=Math.floor(Math.random()*len)
                 var elem=Arr_empty[random]
-                //console.log(len)
-                //console.log(random)
-                document.getElementById(elem.toString()).innerHTML='2'
+               
+                document.getElementById(elem.toString()).querySelector('.number').innerHTML='2'
+                document.getElementById(elem.toString()).querySelector('.number').style.backgroundColor="#eee3d6";
+                
+                // var new_div=document.createElement('div')
+                // new_div.setAttribute('class','number')
+                // new_div.innerHTML='2'
+                // div.appendChild(new_div)
             }
+            
             //console.log(Arr_empty)
         }
         document.onkeydown = function(event) {
+            
+            
+            clock_row=0
             switch (event.keyCode) {
             case 37:
-                    left();
+                    
+                    left()
+                    merger();
                 break;
             case 38:
-                    up();
+                    up()
+                    
                 break;
             case 39:
-                   right() ;
+                   right() 
+                   
                 break;
             case 40:
-                    down();
+                    down()
+                    
                 break;
             }
         };
+        function color(){
+            var num_len=document.getElementsByClassName("number")
+            var length=num_len.length
+            
+
+            for(var i=0;i<length;i++){
+                document.getElementsByClassName('number')[i].style.backgroundColor=''
+                var elem_num=document.getElementsByClassName('number')[i]
+                var len_arr=colors.length
+                
+                for(var j=0;j<len_arr;j++){
+                    if(elem_num.innerText==colors[j]){
+                        document.getElementsByClassName('number')[i].style.backgroundColor=''
+                        document.getElementsByClassName('number')[i].style.backgroundColor=colors_arr[j]
+                        
+                        //console.log(j)
+                    }
+                }
+
+                
+            }
+        }
         function clock(){
             // for(var i=1;i<5;i++){
             //     for(var j=i+1;j<5;j++){
@@ -128,7 +229,7 @@
                 var row=[]
                 for(var j=1;j<5;j++){
                    var no=i*10+j
-                   row.push(document.getElementById(no.toString()).innerHTML) 
+                   row.push(document.getElementById(no.toString()).querySelector('.number').innerHTML) 
                 }
                 Arr_box.push(row)
             }
@@ -136,17 +237,29 @@
                 for(var j=0;j<4;j++){
                     var temp=Arr_box[3-j][i]
                     var no=(i+1)*10+(j+1)
-                    document.getElementById(no.toString()).innerHTML=temp
+                    document.getElementById(no.toString()).querySelector('.number').innerHTML=temp
                 }
             }
+            clock_row++
+            color()
+            
         }
+        let count=0
+        let start=0
+        let rows_merged=[]
+        let clock_row=0
         function left(){
+            rows_merged=[]
+            
             for(var i=1;i<5;i++){
+                count=0;
+                start=0
                 var row=[]
+                var each_row={}
                 for(var j=1;j<5;j++){
                     var no=i*10+j
-                    var val=document.getElementById(no.toString()).innerHTML
-                    if(val!='.'){
+                    var val=document.getElementById(no.toString()).querySelector('.number').innerHTML
+                    if(val!=''){
                         var num=parseInt(val)
                         var len=row.length
                         if(len!=0){
@@ -154,6 +267,9 @@
                                 var ne=row[len-1]+num
                                 row.pop()
                                 row.push(ne)
+
+                                start=len-1
+                                count++
                             }
                             else{
                                 row.push(num)
@@ -165,37 +281,66 @@
                         
                     }
                 }
+                each_row.start=start;
+                each_row.count=count;
+                each_row.row=i
+                rows_merged.push(each_row)
                 var len_row=row.length
                 if(len_row!=0){
                     for(var j=0;j<len_row;j++){
                         var no=i*10+(j+1)
-                        document.getElementById(no.toString()).innerHTML=row[j].toString()
+                        document.getElementById(no.toString()).querySelector('.number').innerHTML=row[j].toString()
+                        var index=colors.indexOf(row[j].toString())
+                        //console.log(index)
+                        document.getElementById(no.toString()).querySelector('.number').style.backgroundColor=colors_arr[index]
+                        document.getElementById(no.toString()).querySelector('.number').style.animation=''
+                        
                     }
                     for(var j=len_row+1;j<5;j++){
                         var no=i*10+j
-                        document.getElementById(no.toString()).innerHTML='.'
+                        document.getElementById(no.toString()).querySelector('.number').innerHTML=''
+                        document.getElementById(no.toString()).querySelector('.number').style.backgroundColor=''
+                        document.getElementById(no.toString()).querySelector('.number').style.animation=''
                     }
                 }
                 else{
                     for(var j=1;j<5;j++){
                         var no=i*10+j
-                        document.getElementById(no.toString()).innerHTML='.'
+                        document.getElementById(no.toString()).querySelector('.number').innerHTML=''
+                        document.getElementById(no.toString()).querySelector('.number').style.backgroundColor=''
+                        document.getElementById(no.toString()).querySelector('.number').style.animation=''
                     }
                 }
+                // if(start!=0){
+                //     for(var k=start;k<=count;k++){
+                //         var no=i*10+(start+1)
+                //         document.getElementById(no.toString()).querySelector('.number').style.animation='0.2s big'
+                //     }
+                // }
+                // else{
+                //     for(var k=0;k<count;k++){
+                //         var no=i*10+(k+1)
+                //         document.getElementById(no.toString()).querySelector('.number').style.animation='0.2s big'
+                //     }
+                // }
+                
                 
             }
             random()
+           
         }
         function up(){
             clock()
             clock()
             clock()
             left()
+            merger()
             clock()
         }
         function down(){
             clock()
             left()
+            merger()
             clock()
             clock()
             clock()
@@ -204,8 +349,73 @@
             clock()
             clock()
             left()
+            merger()
             clock()
             clock()
+        }
+        function merger(){
+            //console.log(clock_row)
+            //console.log(rows_merged)
+            
+            switch(clock_row){
+                case 0:
+                    for(i=1;i<5;i++){
+                        no=i*10+1
+                        array_elem=i-1
+                        var element=rows_merged[array_elem]
+                        console.log(element)
+
+                        for(var k=element.start;k<element.count+element.start;k++){
+                            var new_no=no+k
+                            document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
+                    }
+                    break;
+                ;
+                case 1:
+                    for(i=1;i<5;i++){    
+                        no=40+i
+                        array_elem=i-1
+                        var element=rows_merged[array_elem]
+                        console.log(element)
+                        for(var k=element.start;k<element.count+element.start;k++){
+                            var new_no=no-(k*10)
+                            document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
+                    }
+                    break;
+                ;
+                case 2:
+                    for(i=1;i<5;i++){    
+                        no=i*10+4
+                        array_elem=4-i
+                        var element=rows_merged[array_elem]
+                        console.log(element)
+                        for(var k=element.start;k<element.count+element.start;k++){
+                            var new_no=no-k
+                            document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
+                    }
+                    break;
+                ;
+                case 3:
+                    for(i=1;i<5;i++){   
+                        no=10+i
+                        
+                        array_elem=4-i
+                        var element=rows_merged[array_elem]
+                        console.log(element)
+                        for(var k=element.start;k<element.count+element.start;k++){
+                            var new_no=no+(k*10)
+                            document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
+                    }
+                    break;    
+                ;
+            }
+            console.log('hi')
+
+
         }
     </script>
 </body>
