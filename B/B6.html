@@ -80,8 +80,8 @@
 
                     </div>
                 </div>
-                <div id="photo" style="height: 100px; width: 100px; border-radius: 50%; border-color: darkblue;">
-
+                <div id="photo_cont" style="height: 100px; width: 100px; border-radius: 50%; border-color: darkblue;">
+                    <img id="picture"style="height: 100px; width: 100px; border-radius: 50%; ">
                 </div>
             </div>
             
@@ -109,7 +109,7 @@
             var url=document.getElementById("input").value
             var name=document.getElementById("name")
             var desc=document.getElementById('desc')
-            var img=document.getElementById("photo")
+            var img=document.getElementById("picture")
             if(input=="XMLHttpRequest"){
                 var xhr=new XMLHttpRequest()
                 xhr.open('GET','https://api.github.com/users/'+url)
@@ -126,7 +126,8 @@
                         desc.innerHTML="Not Mentioned"
                     }
 
-                    img.style.background="url("+result.avatar_url+")"
+                    img.src=result.avatar_url
+                    img.style.border="2px solid darkblue"
                 }
                 var end=performance.now()
                 alert('This Request took '+(end-now)+' millisec')
@@ -150,7 +151,8 @@
                                 desc.innerHTML="Not Mentioned"
                             }
                             
-                            img.style.background="url("+data.avatar_url+")"
+                            img.src=result.avatar_url
+                            img.style.border="2px solid darkblue"
                         }
                     });
                     var end=performance.now()
@@ -173,7 +175,8 @@
                         desc.innerHTML="Not Mentioned"
                      }
                     
-                    img.style.background="url("+data.avatar_url+")"
+                     img.src=result.avatar_url
+                     img.style.border="2px solid darkblue"
                     var end=performance.now()
                     alert('This Request took '+(end-now)+' millisec')
                 })()

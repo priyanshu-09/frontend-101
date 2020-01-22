@@ -10,7 +10,7 @@
 
         }
         .box{
-            width: 400px;
+            min-width: 200px;
             height: auto;
             display: flex;
             justify-content: center;
@@ -19,7 +19,7 @@
             
         }
         .table{
-            width: 336px;
+            min-width: 136px;
             display: flex;
             flex-direction: column;
             border: 10px solid grey;
@@ -29,17 +29,23 @@
 
 
         }
+        .lines{
+            word-wrap:none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body >
     <div class="wrapper">
         <div class="box">
             <div class="table">
-                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(1)}" > Random <br>
-                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(2)}"> Random<br>
-                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(3)}"> Random<br>
-                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(4)}"> Random<br>
-                <input type="checkbox" class="check" onclick="if(this.checked){myFunction(5)}"> Random<br>
+                <div class="lines"><input type="checkbox" class="check" onclick="if(this.checked){myFunction(1)}" > Random <br></div>
+                <div class="lines"><input type="checkbox" class="check" onclick="if(this.checked){myFunction(2)}"> Random<br></div>
+                <div class="lines"><input type="checkbox" class="check" onclick="if(this.checked){myFunction(3)}"> Random<br></div>
+                <div class="lines"><input type="checkbox" class="check" onclick="if(this.checked){myFunction(4)}"> Random<br></div>
+                <div class="lines"><input type="checkbox" class="check" onclick="if(this.checked){myFunction(5)}"> Random<br></div>
                 
                 
             </div>
@@ -47,24 +53,32 @@
     </div>
     <script>
         let order=0
+        let start=0
         function myFunction(input){
-            order=input-1
+            
             //console.log("hi")
             //console.log(order)
-            check_shift(event)
+            if(!is_shift(event)){
+                start=input-1
+            }
+            else{
+                order=input-1
+                check_shift()
+            }
+
         }
-        function check_shift(event){
-            if(event.shiftKey){
+        function check_shift(){
+            
                 
-                var start=0
+                
                 var elem=document.getElementsByClassName("check")
-                var len=elem.length
-                for(var i=0;i<len;i++){
-                    if(elem[i].checked){
-                        start=i
-                        break
-                    }
-                }
+                // var len=elem.length
+                // for(var i=0;i<len;i++){
+                //     if(elem[i].checked){
+                //         start=i
+                //         break
+                //     }
+                // }
                 if(order>start){
                     for(var i=start;i<=order;i++){
                         elem[i].checked=true
@@ -74,6 +88,11 @@
                 //console.log("bye")
                 //console.log(order)
                 //console.log(start)
+            }
+        
+        function is_shift(event){
+            if(event.shiftKey){
+                return true
             }
         }
     </script>
