@@ -39,11 +39,12 @@
             width: 100px;
             background: transparent;
             font-size: 40px;
-            background-color: ivory;
+            background-color:transparent;
             border-radius: 2%;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: transform 0.5s;
         }
         @keyframes big {
             0%{
@@ -171,20 +172,20 @@
             clock_row=0
             switch (event.keyCode) {
             case 37:
+                    left_move()
                     
-                    left()
-                    merger();
+                    
                 break;
             case 38:
-                    up()
+                    up_move()
                     
                 break;
             case 39:
-                   right() 
+                   right_move() 
                    
                 break;
             case 40:
-                    down()
+                    down_move()
                     
                 break;
             }
@@ -267,9 +268,19 @@
                                 var ne=row[len-1]+num
                                 row.pop()
                                 row.push(ne)
-
+                                
                                 start=len-1
                                 count++
+                                if(j!=4&&j!=1){
+                                    var strange=i*10+(j+1)
+                                    var val_s=document.getElementById(strange.toString()).querySelector('.number').innerHTML
+                                    
+                                    if(val_s==ne.toString()){
+                                        count--
+                                       // console.log('I am here')
+                                    }
+                                }
+                                
                             }
                             else{
                                 row.push(num)
@@ -294,6 +305,9 @@
                         //console.log(index)
                         document.getElementById(no.toString()).querySelector('.number').style.backgroundColor=colors_arr[index]
                         document.getElementById(no.toString()).querySelector('.number').style.animation=''
+                        document.getElementById(no.toString()).querySelector('.number').style.transform=''
+                        
+                        
                         
                     }
                     for(var j=len_row+1;j<5;j++){
@@ -301,6 +315,7 @@
                         document.getElementById(no.toString()).querySelector('.number').innerHTML=''
                         document.getElementById(no.toString()).querySelector('.number').style.backgroundColor=''
                         document.getElementById(no.toString()).querySelector('.number').style.animation=''
+                        document.getElementById(no.toString()).querySelector('.number').style.transform=''
                     }
                 }
                 else{
@@ -309,6 +324,7 @@
                         document.getElementById(no.toString()).querySelector('.number').innerHTML=''
                         document.getElementById(no.toString()).querySelector('.number').style.backgroundColor=''
                         document.getElementById(no.toString()).querySelector('.number').style.animation=''
+                        document.getElementById(no.toString()).querySelector('.number').style.transform=''
                     }
                 }
                 // if(start!=0){
@@ -363,11 +379,14 @@
                         no=i*10+1
                         array_elem=i-1
                         var element=rows_merged[array_elem]
-                        console.log(element)
+                        //console.log(element)
 
+                        var length_arr=rows_merged.length
+                        if(length_arr>0){
                         for(var k=element.start;k<element.count+element.start;k++){
                             var new_no=no+k
                             document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
                         }
                     }
                     break;
@@ -377,10 +396,13 @@
                         no=40+i
                         array_elem=i-1
                         var element=rows_merged[array_elem]
-                        console.log(element)
+                        //console.log(element)
+                        var length_arr=rows_merged.length
+                        if(length_arr>0){
                         for(var k=element.start;k<element.count+element.start;k++){
                             var new_no=no-(k*10)
                             document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
                         }
                     }
                     break;
@@ -390,10 +412,13 @@
                         no=i*10+4
                         array_elem=4-i
                         var element=rows_merged[array_elem]
-                        console.log(element)
+                        //console.log(element)
+                        var length_arr=rows_merged.length
+                        if(length_arr>0){
                         for(var k=element.start;k<element.count+element.start;k++){
                             var new_no=no-k
                             document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
                         }
                     }
                     break;
@@ -404,18 +429,569 @@
                         
                         array_elem=4-i
                         var element=rows_merged[array_elem]
-                        console.log(element)
+                        //console.log(element)
+                        var length_arr=rows_merged.length
+                        if(length_arr>0){
                         for(var k=element.start;k<element.count+element.start;k++){
                             var new_no=no+(k*10)
                             document.getElementById(new_no.toString()).querySelector('.number').style.animation='0.2s big'
+                        }
                         }
                     }
                     break;    
                 ;
             }
-            console.log('hi')
+            //console.log('hi')
 
 
+        }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+        function left_move(){
+            var dist=document.getElementById('11').getBoundingClientRect().width+10
+            
+            for(var i=1;i<5;i++){
+                let spaces=0
+                let merge_dist=0
+                let row=[]
+                let merged=false
+                let second_merged=false
+                var double_merged=false
+                let count=2
+                let first=i*10+1
+                if(get_el(first)==''){
+                    spaces=1
+                }
+                for(var j=2;j<5;j++){
+                    var no=i*10+j
+                    
+                   
+                    if(get_el(no)!=''){
+                        var isSecond=j-spaces
+                        let total_dist=0
+                        
+                        if(count==2){
+                            if(get_el(no)==get_el(first)){
+                                merged=true
+                                merge_dist++
+                            }
+                            row.push(get_el(no))
+                            total_dist=merge_dist+spaces
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=-(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                           // console.log(final)
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateX("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        
+                        var isThird=row.length==1
+                        if(count==3){
+                            if(merged==false){
+                                total_dist=spaces
+                                if(row[0]==get_el(no)){
+                                    total_dist++
+                                    second_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            else{
+                                total_dist=spaces+1
+                                if(parseInt(get_el(no))==parseInt(get_el(first))+parseInt(row[0])){
+                                    total_dist++
+                                    double_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=-(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateX("+final+"px)"
+                            //console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        var isFourth=row.length==2
+                        if(count==4){
+                            if(merged){
+                                total_dist++
+                                if(double_merged){
+                                    total_dist++
+
+                                }
+
+                            }
+                            else if(second_merged){
+                                total_dist++
+                                if(parseInt(get_el(no))==parseInt(row[1])+parseInt(row[0])){
+                                    total_dist++
+                                }
+                            }
+                            else{
+                                if(get_el(no)==row[1]){
+                                    total_dist++
+                                }
+                            }
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=-(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateX("+final+"px)"
+                            //console.log(document.getElementById(no.toString()).querySelector('.number'))
+                        }
+                        //console.log(i+" "+j+" "+total_dist)
+                        //console.log(i+'     '+row)
+                        spaces=0
+                    }
+                    else{
+                        spaces++
+                    }
+                    
+                }
+            }
+            //console.log('hi')
+            setTimeout(newfunction,100)
+            
+        }
+
+        function newfunction(){
+            left()
+            merger()
+        }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+        function right_move(){
+            var dist=document.getElementById('11').getBoundingClientRect().width+10
+            
+            for(var i=1;i<5;i++){
+                let spaces=0
+                let merge_dist=0
+                let row=[]
+                let merged=false
+                let second_merged=false
+                var double_merged=false
+                let count=2
+                let first=i*10+4
+                if(get_el(first)==''){
+                    spaces=1
+                }
+                for(var j=2;j<5;j++){
+                    var no=i*10+(5-j)
+                    
+                   
+                    if(get_el(no)!=''){
+                        var isSecond=j-spaces
+                        let total_dist=0
+                        
+                        if(count==2){
+                            if(get_el(no)==get_el(first)){
+                                merged=true
+                                merge_dist++
+                            }
+                            row.push(get_el(no))
+                            total_dist=merge_dist+spaces
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                           // console.log(final)
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateX("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        
+                        var isThird=row.length==1
+                        if(count==3){
+                            if(merged==false){
+                                total_dist=spaces
+                                if(row[0]==get_el(no)){
+                                    total_dist++
+                                    second_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            else{
+                                total_dist=spaces+1
+                                if(parseInt(get_el(no))==parseInt(get_el(first))+parseInt(row[0])){
+                                    total_dist++
+                                    double_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateX("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        var isFourth=row.length==2
+                        if(count==4){
+                            if(merged){
+                                total_dist++
+                                if(double_merged){
+                                    total_dist++
+
+                                }
+
+                            }
+                            else if(second_merged){
+                                total_dist++
+                                if(parseInt(get_el(no))==parseInt(row[1])+parseInt(row[0])){
+                                    total_dist++
+                                }
+                            }
+                            else{
+                                if(get_el(no)==row[1]){
+                                    total_dist++
+                                }
+                            }
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateX("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                        }
+                        //console.log(i+" "+j+" "+total_dist)
+                        //console.log(i+'     '+row)
+                        spaces=0
+                    }
+                    else{
+                        spaces++
+                    }
+                    
+                }
+            }
+            //console.log('hi')
+            setTimeout(right,100)
+        }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+function up_move(){
+            var dist=document.getElementById('11').getBoundingClientRect().height+10
+            
+            for(var i=1;i<5;i++){
+                let spaces=0
+                let merge_dist=0
+                let row=[]
+                let merged=false
+                let second_merged=false
+                var double_merged=false
+                let count=2
+                let first=10+i
+                if(get_el(first)==''){
+                    spaces=1
+                }
+                for(var j=2;j<5;j++){
+                    var no=j*10+i
+                    
+                   
+                    if(get_el(no)!=''){
+                        var isSecond=j-spaces
+                        let total_dist=0
+                        
+                        if(count==2){
+                            if(get_el(no)==get_el(first)){
+                                merged=true
+                                merge_dist++
+                            }
+                            row.push(get_el(no))
+                            total_dist=merge_dist+spaces
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=-(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                           // console.log(final)
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateY("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        
+                        var isThird=row.length==1
+                        if(count==3){
+                            if(merged==false){
+                                total_dist=spaces
+                                if(row[0]==get_el(no)){
+                                    total_dist++
+                                    second_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            else{
+                                total_dist=spaces+1
+                                if(parseInt(get_el(no))==parseInt(get_el(first))+parseInt(row[0])){
+                                    total_dist++
+                                    double_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=-(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateY("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        var isFourth=row.length==2
+                        if(count==4){
+                            if(merged){
+                                total_dist++
+                                if(double_merged){
+                                    total_dist++
+
+                                }
+
+                            }
+                            else if(second_merged){
+                                total_dist++
+                                if(parseInt(get_el(no))==parseInt(row[1])+parseInt(row[0])){
+                                    total_dist++
+                                }
+                            }
+                            else{
+                                if(get_el(no)==row[1]){
+                                    total_dist++
+                                }
+                            }
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=-(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateY("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                        }
+                        //console.log(i+" "+j+" "+total_dist)
+                        //console.log(i+'     '+row)
+                        spaces=0
+                    }
+                    else{
+                        spaces++
+                    }
+                    
+                }
+            }
+            //console.log('hi')
+            setTimeout(up,100)
+        }
+
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+        function down_move(){
+            var dist=document.getElementById('11').getBoundingClientRect().height+10
+            
+            for(var i=1;i<5;i++){
+                let spaces=0
+                let merge_dist=0
+                let row=[]
+                let merged=false
+                let second_merged=false
+                var double_merged=false
+                let count=2
+                let first=40+i
+                if(get_el(first)==''){
+                    spaces=1
+                }
+                for(var j=2;j<5;j++){
+                    var no=(5-j)*10+i
+                    
+                   
+                    if(get_el(no)!=''){
+                        var isSecond=j-spaces
+                        let total_dist=0
+                        
+                        if(count==2){
+                            if(get_el(no)==get_el(first)){
+                                merged=true
+                                merge_dist++
+                            }
+                            row.push(get_el(no))
+                            total_dist=merge_dist+spaces
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                           // console.log(final)
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateY("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        
+                        var isThird=row.length==1
+                        if(count==3){
+                            if(merged==false){
+                                total_dist=spaces
+                                if(row[0]==get_el(no)){
+                                    total_dist++
+                                    second_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            else{
+                                total_dist=spaces+1
+                                if(parseInt(get_el(no))==parseInt(get_el(first))+parseInt(row[0])){
+                                    total_dist++
+                                    double_merged=true
+                                }
+                                row.push(get_el(no))
+                            }
+                            count++
+                            //console.log(i+" "+j+" "+total_dist)
+                            //console.log(i+'     '+row)
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateY("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                            spaces=0
+                            continue
+                        }
+                        var isFourth=row.length==2
+                        if(count==4){
+                            if(merged){
+                                total_dist++
+                                if(double_merged){
+                                    total_dist++
+
+                                }
+
+                            }
+                            else if(second_merged){
+                                total_dist++
+                                if(parseInt(get_el(no))==parseInt(row[1])+parseInt(row[0])){
+                                    total_dist++
+                                }
+                            }
+                            else{
+                                if(get_el(no)==row[1]){
+                                    total_dist++
+                                }
+                            }
+                            let final=(dist*total_dist)
+                            if(final!=0){
+                                final=(dist*total_dist)
+                            }
+                            else{
+                                final=0
+                            }
+                            document.getElementById(no.toString()).querySelector('.number').style.transform="translateY("+final+"px)"
+                           // console.log(document.getElementById(no.toString()).querySelector('.number'))
+                        }
+                        //console.log(i+" "+j+" "+total_dist)
+                        //console.log(i+'     '+row)
+                        spaces=0
+                    }
+                    else{
+                        spaces++
+                    }
+                    
+                }
+            }
+            //console.log('hi')
+            setTimeout(down,100)
+        }
+
+        function get_el(input){
+            return document.getElementById(input.toString()).querySelector('.number').innerHTML
         }
     </script>
 </body>
