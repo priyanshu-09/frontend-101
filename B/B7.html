@@ -5,6 +5,50 @@
             display: flex;
             justify-content: center;
             align-items:center;
+            flex-direction: column;
+        }
+        .game-name, .score-board {
+            margin-top: 20px;
+        }
+
+        .game-name {
+            background: #edc501;
+            height: 150px;
+            width: 150px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .game-name > h1 {
+            font-size: 3em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 5px;
+        }
+
+        .score-board {
+            background: #bbada0;
+            height: 100px;
+            width: 150px;
+            float: right;
+            border-radius: 10px;  
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        .score-title {
+            color: #cdc1b4;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        #score {
+            font-size: 2em;
+            color: #fff;
+            text-align: center;
         }
         .box{
             height: 450px;
@@ -14,7 +58,7 @@
             padding: 5px;
             background-color:#e3ac78;
 
-            color:brown;
+            color:#4a3929;
             font-weight: bold;
             display: flex;
             flex-direction: column;
@@ -27,8 +71,8 @@
             height: 100px;
             width: 100px;
             margin: 5px;
-            background-color: ivory;
-            border-radius: 2%;
+            background-color:blanchedalmond;
+            border-radius: 4%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -40,7 +84,7 @@
             background: transparent;
             font-size: 40px;
             background-color:transparent;
-            border-radius: 2%;
+            border-radius: 4%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -61,6 +105,15 @@
 </hEAD>
 <body>
     <div class="wrapper">
+        <div style="display: flex; justify-content: space-evenly; width: 450px; margin-bottom: 20px;">
+            <div class="score-board">
+                <div class="score-title">SCORE</div>
+                <div id="score">0</div>
+            </div>
+            <div class="game-name"> 
+                <h1>2048</h1> 
+            </div> 
+        </div>
         <div class="box">
             <div>
                 <div id="11">
@@ -245,6 +298,7 @@
             color()
             
         }
+        
         let count=0
         let start=0
         let rows_merged=[]
@@ -268,7 +322,9 @@
                                 var ne=row[len-1]+num
                                 row.pop()
                                 row.push(ne)
-                                
+                                var score=parseInt(document.getElementById('score').innerHTML)
+                                score+=ne
+                                document.getElementById('score').innerHTML=score.toString()
                                 start=len-1
                                 count++
                                 if(j!=4&&j!=1){
