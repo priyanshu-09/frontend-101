@@ -1,20 +1,100 @@
 <!DOCTYPE HTML>
 <hEAD>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta charset="utf-8">
     <style>
+        body{
+            background-color: beige;
+        }
+       @media all and (min-width: 720px) {
+            .head{
+                display: flex;
+                justify-content: space-evenly; 
+                width: 450px; 
+                margin-bottom: 20px;
+            }
+            .game-name{
+                height: 150px;
+                width: 150px;
+            }
+            .game-name > h1 {
+                font-size: 3em;
+            }
+            .score-board{
+                height: 100px;
+                width: 150px;
+            }
+            .box{
+                height: 450px;
+                width: 450px;
+                font-size: 40px;
+            }
+            .box>div>div{
+                height: 100px;
+                width: 100px;
+            }
+            .number{
+                height: 100px;
+                width: 100px;
+            }
+            .game-name, .score-board {
+                margin-top: 20px;
+            }
+        }
+        @media all and (max-width: 719px){
+            .head{
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center; 
+                flex-direction: column;
+                width:100vw; 
+                margin-bottom: 20px;
+                margin-top: -13vh;
+            }
+            .game-name{
+                height: 30vw;
+                width: 60vw;
+            }
+            .game-name > h1 {
+                font-size: 2.5em;
+            }
+            .game-name, .score-board {
+                margin-top: 10px;
+            }
+            .score-board{
+                height: 10vh;
+                width: 30vw;
+            }
+            .box{
+                height: 48vh;
+                width: 89vw;
+                font-size: 1.5em;
+            }
+            .box>div>div{
+                min-height: calc((48vh-50px));
+                min-width: calc((89vw-50px));
+            }
+            .number{
+                height: calc((48vh-50px)/4);
+                width:calc((89vw-50px)/4);
+            }
+            .wrapper{
+                width: 100vw;
+                height: 100vh;
+            }
+        }
         .wrapper{
             display: flex;
             justify-content: center;
             align-items:center;
             flex-direction: column;
         }
-        .game-name, .score-board {
-            margin-top: 20px;
-        }
+        
 
         .game-name {
             background: #edc501;
-            height: 150px;
-            width: 150px;
+            
             color: #fff;
             display: flex;
             justify-content: center;
@@ -23,7 +103,7 @@
         }
 
         .game-name > h1 {
-            font-size: 3em;
+            
             font-weight: bold;
             letter-spacing: 1px;
             border-radius: 5px;
@@ -31,8 +111,7 @@
 
         .score-board {
             background: #bbada0;
-            height: 100px;
-            width: 150px;
+            
             float: right;
             border-radius: 10px;  
             display: flex;
@@ -51,9 +130,8 @@
             text-align: center;
         }
         .box{
-            height: 450px;
-            width: 450px;
-            font-size: 40px;
+            
+            
             border-radius: 2%;
             padding: 5px;
             background-color:#e3ac78;
@@ -68,8 +146,7 @@
             display: flex;
         }
         .box>div>div{
-            height: 100px;
-            width: 100px;
+            
             margin: 5px;
             background-color:blanchedalmond;
             border-radius: 4%;
@@ -79,10 +156,9 @@
 
         }
         .number{
-            height: 100px;
-            width: 100px;
+            
             background: transparent;
-            font-size: 40px;
+            
             background-color:transparent;
             border-radius: 4%;
             display: flex;
@@ -105,14 +181,15 @@
 </hEAD>
 <body>
     <div class="wrapper">
-        <div style="display: flex; justify-content: space-evenly; width: 450px; margin-bottom: 20px;">
+        <div class="head">
+            <div class="game-name"> 
+                <h1>2048</h1> 
+            </div> 
             <div class="score-board">
                 <div class="score-title">SCORE</div>
                 <div id="score">0</div>
             </div>
-            <div class="game-name"> 
-                <h1>2048</h1> 
-            </div> 
+            
         </div>
         <div class="box">
             <div>
@@ -177,6 +254,14 @@
     <script>
         const colors = ['2','4','8','16','32','64','128','256','512','1024','2048']
         const colors_arr=["#eee3d6","#fab387","#f2b179","#f59563","#f67e5f","#f65e3b","#f1d96b","#f2cf4d","#e5c12b","#dfba12","#edc501"]
+        var number_div=document.getElementsByClassName('number')
+        var len_number=number_div.length
+        var width_box=(document.getElementsByClassName('box')[0].getBoundingClientRect().width-50)/4
+        var height_box=(document.getElementsByClassName('box')[0].getBoundingClientRect().height-50)/4
+        for(var i=0;i<len_number;i++){
+            number_div[i].style.width=width_box+'px'
+            number_div[i].style.height=height_box+'px'
+        }
         random()
 
         function random(){
