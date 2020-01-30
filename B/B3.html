@@ -91,7 +91,7 @@
             var name =document.getElementById('add').value;
             var div=document.createElement('div')
             
-            div.innerHTML='<div class="center">'+name+'</div>'+'<a class="center" onclick="remove('+name+')">X</a>';
+            div.innerHTML='<div class="center cont">'+name+'</div>'+'<a class="center" onclick="remove('+name+')">X</a>';
             div.setAttribute("id",name)
             div.setAttribute("class","table_contents")
             table.appendChild(div)
@@ -103,11 +103,11 @@
         function remove(iput){
             //var div=document.getElementById()
             
-            
+            console.log(iput)
             table.removeChild(iput)
             var rem=getName(iput)
             arr()
-            
+            console.log(Arr)
 
             //localStorage.removeItem(rem)
         }
@@ -119,7 +119,7 @@
             sessionStorage.setItem("HI","count")
             
             sessionStorage.removeItem("array")
-            var contents=document.getElementsByClassName('table_contents')
+            var contents=document.getElementsByClassName('cont')
             var len=contents.length
             for (var i=0;i<len;i++){
                 var elem=contents[i]
@@ -127,6 +127,8 @@
                 var rem=getName(elem)
                 Arr.push(rem)
             }
+            console.log('hij')
+            console.log(Arr)
             console.log(JSON.stringify(Arr))
             sessionStorage.setItem("array",JSON.stringify(Arr))
         }

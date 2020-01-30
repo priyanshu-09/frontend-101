@@ -49,16 +49,24 @@ swipedetect(el, function(swipedir){
     
     switch(swipedir){
         case "left":
+            array_box()
             left_move()
+            setTimeout(is_array_same,100)
             break;
         case "right":
+            array_box()
             right_move()
+            setTimeout(is_array_same,100)
             break;
         case "up":
+            array_box()
             up_move()
+            setTimeout(is_array_same,100)
             break;
         case "down":
+            array_box()
             down_move()
+            setTimeout(is_array_same,100)
             break;
     }
 })

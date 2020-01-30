@@ -311,21 +311,25 @@
             clock_row=0
             switch (event.keyCode) {
             case 37:
+                    array_box()
                     left_move()
-                    
+                    setTimeout(is_array_same,100)
                     
                 break;
             case 38:
+                    array_box()
                     up_move()
-                    
+                    setTimeout(is_array_same,100)
                 break;
             case 39:
+                    array_box()
                    right_move() 
-                   
+                   setTimeout(is_array_same,100)
                 break;
             case 40:
+                    array_box()
                     down_move()
-                    
+                    setTimeout(is_array_same,100)
                 break;
             }
         };
@@ -349,6 +353,39 @@
                 }
 
                 
+            }
+        }
+        let old_arr_box=[]
+        function array_box(){
+            old_arr_box=[]
+            for(var i=1;i<5;i++){
+                var row=[]
+                for(var j=1;j<5;j++){
+                   var no=i*10+j
+                   row.push(document.getElementById(no.toString()).querySelector('.number').innerHTML) 
+                }
+                old_arr_box.push(row)
+            }
+            console.log('byejo')
+        }
+        function is_array_same(){
+            var new_arr_box=[]
+            console.log('mk')
+            for(var i=1;i<5;i++){
+                var row=[]
+                for(var j=1;j<5;j++){
+                   var no=i*10+j
+                   row.push(document.getElementById(no.toString()).querySelector('.number').innerHTML) 
+                }
+                new_arr_box.push(row)
+            }
+            for(var i=1;i<5;i++){
+                for(var j=1;j<5;j++){
+                    if(old_arr_box[i][j]==new_arr_box[i][j]){
+                       
+                        alert('No moves Left in this direction')
+                    }
+                }
             }
         }
         function clock(){
@@ -599,7 +636,7 @@
 
         function left_move(){
             var dist=document.getElementById('11').getBoundingClientRect().width+10
-            
+            console.log('left')
             for(var i=1;i<5;i++){
                 let spaces=0
                 let merge_dist=0

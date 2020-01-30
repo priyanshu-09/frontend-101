@@ -116,17 +116,17 @@
                 xhr.send()
                 //xhr.onerror=alert("There is some error")
                 xhr.onload=function(){
-                    var result=JSON.parse(xhr.response)
-                    if(result.message){alert("User Not Found")}
-                    if(result.name){name.innerHTML=result.name}
+                    var response =JSON.parse(xhr.response)
+                    if(response .message){alert("User Not Found")}
+                    if(response .name){name.innerHTML=response .name}
                     else{name.innerHTML="Not Mentioned"}
 
-                    if(result.bio){desc.innerHTML=result.bio}
+                    if(response .bio){desc.innerHTML=response .bio}
                     else{
                         desc.innerHTML="Not Mentioned"
                     }
 
-                    img.src=result.avatar_url
+                    img.src=response .avatar_url
                     img.style.border="2px solid darkblue"
                 }
                 var end=performance.now()
@@ -151,7 +151,7 @@
                                 desc.innerHTML="Not Mentioned"
                             }
                             
-                            img.src=result.avatar_url
+                            img.src=data.avatar_url
                             img.style.border="2px solid darkblue"
                         }
                     });
@@ -175,7 +175,7 @@
                         desc.innerHTML="Not Mentioned"
                      }
                     
-                     img.src=result.avatar_url
+                     img.src=data.avatar_url
                      img.style.border="2px solid darkblue"
                     var end=performance.now()
                     alert('This Request took '+(end-now)+' millisec')
