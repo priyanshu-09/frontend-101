@@ -365,6 +365,7 @@
                    row.push(document.getElementById(no.toString()).querySelector('.number').innerHTML) 
                 }
                 old_arr_box.push(row)
+                console.log(row)
             }
             console.log('byejo')
         }
@@ -378,14 +379,22 @@
                    row.push(document.getElementById(no.toString()).querySelector('.number').innerHTML) 
                 }
                 new_arr_box.push(row)
+                console.log(row)
             }
-            for(var i=1;i<5;i++){
-                for(var j=1;j<5;j++){
+            
+            var count_same=0
+            for(var i=0;i<4;i++){
+                for(var j=0;j<4;j++){
+                    
                     if(old_arr_box[i][j]==new_arr_box[i][j]){
-                       
-                        alert('No moves Left in this direction')
+                        console.log(count_same)
+                        count_same++
                     }
                 }
+            }
+            if(count_same==16){
+                alert('No more moves left in this direction')
+                location.reload()
             }
         }
         function clock(){
